@@ -1,8 +1,6 @@
 library(shiny)
+library(quantmod)
 
-
-myTheme <- chart_theme()
-myTheme$col$bg.col <- "cyan"
 
 nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "ALTR", "ALXN", "AMAT", "AMGN", "AMZN", "ATVI",
@@ -15,7 +13,7 @@ nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "LMCK", "MAR", "MAT", "MDLZ"
 ))
 
-shinyServer(function(input, output, session) {
+server <- function(input, output, session) {
   randomSymbolIndex <- function () {
     index <- round(runif(1, 1, 58))
     index
@@ -43,9 +41,9 @@ shinyServer(function(input, output, session) {
   
   
   output$PriceChart1 <- renderPlot({
-    output$results = renderPrint({
-      input$mydata
-    })
+    # output$results = renderPrint({
+    #   input$mydata
+    # })
     lineChart(Prices, 
               name= a,
               type="line", 
@@ -135,4 +133,6 @@ shinyServer(function(input, output, session) {
       )
     })
   })
-})
+}
+
+shinyApp(ui = htmlTemplate("www/index.html"), server)
