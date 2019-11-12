@@ -10,12 +10,12 @@ nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "DTV","EBAY", "EQIX", "ESRX", "EXPD", "EXPE", "FAST", "FB",
                 "FFIV", "FOXA", "GILD", "GOOG", "GOOGL", "GRMN", "HSIC",
                 "ILMN", "INTC", "INTC", "INTU", "ISRG", "KLAC", "LBTYA",
-                "LMCK", "MAR", "MAT", "MDLZ"
+                "MAR", "MAT", "MDLZ"
 ))
 
 server <- function(input, output, session) {
   randomSymbolIndex <- function () {
-    index <- round(runif(1, 1, 58))
+    index <- round(runif(1, 1, 57))
     index
   }
   
