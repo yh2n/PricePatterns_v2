@@ -6,10 +6,23 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <script src="shared/jquery.js" type="text/javascript"></script>
         <script src="shared/shiny.js" type="text/javascript"></script>
+        <script src="https://kit.fontawesome.com/40b31feda3.js" crossorigin="anonymous">
+        </script>
+
         <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
         <title>Document</title>
         <style type="text/css" media="all">
-         body {background-color: powderblue;}
+            * {
+                box-sizing: border-box;
+                
+            }
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: powderblue;
+                
+            }
             #PriceChart1, #PriceChart2 {
                 width: 900px;
                 height: 700px;
@@ -19,6 +32,70 @@
             #new_charts {
                 color: red;
             }
+            
+            .ba-slider {
+                position: relative;
+                overflow: hidden;
+            }
+             
+                .ba-slider div {
+                    width: 100%;
+                    display:block;
+                }
+                 
+                .resize {
+                    position: absolute;
+                    top:0;
+                    left: 0;
+                    height: 100%;
+                    width: 50%;
+                    overflow: hidden;
+                }
+                
+                
+                .handle { /* Thin line seperator */
+                  position:absolute; 
+                  left:50%;
+                  top:0;
+                  bottom:0;
+                  width:4px;
+                  margin-left:-2px;
+                 
+                  background: rgba(0,0,0,.5);
+                  cursor: ew-resize;
+                }
+                 
+                .handle:after {  /* Big orange knob  */
+                    position: absolute;
+                    top: 50%;
+                    width: 64px;
+                    height: 64px;
+                    margin: -32px 0 0 -32px;
+                 
+                    content:'\21d4';
+                    color:white;
+                    font-weight:bold;
+                    font-size:36px;
+                    text-align:center;
+                    line-height:64px;
+                 
+                    background: #ffb800; /* @orange */
+                    border:1px solid #e6a600; /* darken(@orange, 5%) */
+                    border-radius: 50%;
+                    transition:all 0.3s ease;
+                    box-shadow:
+                      0 2px 6px rgba(0,0,0,.3), 
+                      inset 0 2px 0 rgba(255,255,255,.5),
+                      inset 0 60px 50px -30px #ffd466; /* lighten(@orange, 20%)*/ 
+                }
+                
+                .draggable:after {
+                    width: 48px;
+                    height: 48px;
+                    margin: -24px 0 0 -24px;
+                    line-height:48px;
+                    font-size:30px;
+                }
         </style>
     </head>
     <body>
@@ -38,23 +115,108 @@
               console.log(num1, num2, num3);
               Shiny.onInputChange("mydata", numbers);
             };
+            
+            $(document).ready(function(){
+  $('.ba-slider').each(function(){
+    var cur = $(this);
+    // Adjust the slider
+    var width = cur.width()+'px';
+    cur.find('.resize img').css('width', width);
+    // Bind dragging events
+    drags(cur.find('.handle'), cur.find('.resize'), cur);
+  });
+});
+
+// Update sliders on resize. 
+// Because we all do this: i.imgur.com/YkbaV.gif
+$(window).resize(function(){
+  $('.ba-slider').each(function(){
+    var cur = $(this);
+    var width = cur.width()+'px';
+    cur.find('.resize #PriceChart1').css('width', width);
+  });
+});
+
+function drags(dragElement, resizeElement, container) {
+	
+  // Initialize the dragging event on mousedown.
+  dragElement.on('mousedown touchstart', function(e) {
+    
+    dragElement.addClass('draggable');
+    resizeElement.addClass('resizable');
+    
+    // Check if it's a mouse or touch event and pass along the correct value
+    var startX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+    
+    // Get the initial position
+    var dragWidth = dragElement.outerWidth(),
+        posX = dragElement.offset().left + dragWidth - startX,
+        containerOffset = container.offset().left,
+        containerWidth = container.outerWidth();
+ 
+    // Set limits
+    minLeft = containerOffset + 10;
+    maxLeft = containerOffset + containerWidth - dragWidth - 10;
+    
+    // Calculate the dragging distance on mousemove.
+    dragElement.parents().on("mousemove touchmove", function(e) {
+    	
+      // Check if it's a mouse or touch event and pass along the correct value
+      var moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
+      
+      leftValue = moveX + posX - dragWidth;
+      
+      // Prevent going off limits
+      if ( leftValue < minLeft) {
+        leftValue = minLeft;
+      } else if (leftValue > maxLeft) {
+        leftValue = maxLeft;
+      }
+      
+      // Translate the handle's left value to masked divs width.
+      widthValue = (leftValue + dragWidth/2 - containerOffset)*100/containerWidth+'%';
+			
+      // Set the new values for the slider and the handle. 
+      // Bind mouseup events to stop dragging.
+      $('.draggable').css('left', widthValue).on('mouseup touchend touchcancel', function () {
+        $(this).removeClass('draggable');
+        resizeElement.removeClass('resizable');
+      });
+      $('.resizable').css('width', widthValue);
+    }).on('mouseup touchend touchcancel', function(){
+      dragElement.removeClass('draggable');
+      resizeElement.removeClass('resizable');
+    });
+    e.preventDefault();
+  }).on('mouseup touchend touchcancel', function(e){
+    dragElement.removeClass('draggable');
+    resizeElement.removeClass('resizable');
+  });
+}
         </script>
-        <div 
-            id="PriceChart1" 
-            class="shiny-plot-output" 
-        >
-        </div>
-        <div 
-            id="PriceChart2" 
-            class="shiny-plot-output"
-        >
+        <p>Charts</p>
+        <div class="ba-slider">
+            <div 
+                id="PriceChart2" 
+                class="shiny-plot-output" 
+            >
+            </div>
+            <div class="resize">
+                <div 
+                    id="PriceChart1" 
+                    class="shiny-plot-output"
+                >
+                </div>
+            </div>
+            <span class="handle"></span>
+
         </div>
         <button 
             id="new_charts" 
             type="submit" 
             onclick="getNewCharts()"
         >
-            New charts!
+            <i class="fas fa-random"></i>
         </button>
     </body>
 </html>
