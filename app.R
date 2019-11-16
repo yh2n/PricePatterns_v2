@@ -136,3 +136,4 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui = htmlTemplate("www/index.html"), server)
+
