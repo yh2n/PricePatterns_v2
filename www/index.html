@@ -11,7 +11,7 @@
             <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
-        <title>Document</title>
+        <title>orinakin</title>
         <style type="text/css" media="all">
             * {
                 box-sizing: border-box;
@@ -23,39 +23,39 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                background-color: #FFFFFF;
-background-image: linear-gradient(137deg, #FFFFFF 0%, #80a7bf 1%, #e9eff2 95%, #ffffff 100%);
-
-
-                
+                background-color: #06203f;
+background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
             }
             
             .current_date {
               font-size: 30px;
-              margin-bottom: 30px;
-              color: white;
+              margin-bottom: 100px;
+              color: #E9EFF2;
+              opacity: .7;
             }
             #PriceChart1, #PriceChart2 {
                 width: 1200px;
                 height: 650px;
-                border: solid 3px white;
+                border: solid 2px #217554;
                 border-radius: 3px;
+                background-color:rgba(233, 239, 242, 0.7);
             }
-            #PriceChart1 {
-              color: grey;
-            }
-            #PriceChart1 > img, #PriceChart2 > img {
+           
+            #PriceChart1 > img, #PriceChart2 > img{
               width: 100%;
               height: 100%;
             }
+            
             #new_charts {
-                color: #F24E29;
+                color: white;;
+                opacity: .8;
+                background-color: transparent;
                 width: 150px;
                 height: 40px;
                 font-size: 20px;
-                border: none;
+                border: .5px solid #217554;
                 border-radius: 3px;
-                margin-top: 50px;
+                margin-top: 90px;
                 outline: none;
             }
             
@@ -93,13 +93,32 @@ background-image: linear-gradient(137deg, #FFFFFF 0%, #80a7bf 1%, #e9eff2 95%, #
                   cursor: ew-resize;
                 }
                 
-                .draggable:after {
-                    width: 48px;
-                    height: 48px;
-                    margin: -24px 0 0 -24px;
-                    line-height:48px;
-                    font-size:30px;
+                .handle:after {
+                    position: absolute;
+                    top: 2%;
+                    width: 14px;
+                    height: 14px;
+                    margin: -7px 0 0 -7px;
+                    content: '\21d4';
+                    color: white;
+                    font-weight: bold;
+                    font-size: 13px;
+                    text-align: center;
+                    line-height: 14px;
+                    background: #217554;
+                    border: 1px solid #217554;
+                    border-radius: 50%;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, .3), inset 0 2px 0 rgba(255, 255, 255, .5), inset 0 60px 50px -30px #217554;
                 }
+                
+                  .draggable:after {
+                      width: 24px;
+                      height: 24px;
+                      margin: -12px 0 0 -12px;
+                      line-height: 24px;
+                      font-size: 5px;
+                  }
                 
                 @media all and (max-width: 1300px) {
                   #PriceChart1, #PriceChart2 {
@@ -125,40 +144,10 @@ background-image: linear-gradient(137deg, #FFFFFF 0%, #80a7bf 1%, #e9eff2 95%, #
                       height: 434px;
                   }
                 }
-                @media all and (max-width: 800px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 750px;
-                      height: 407px;
-                  }
-                }
-                @media all and (max-width: 800px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 750px;
-                      height: 407px;
-                  }
-                }
-                @media all and (max-width: 800px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 750px;
-                      height: 407px;
-                  }
-                }
                 @media all and (max-width: 750px) {
                   #PriceChart1, #PriceChart2 {
                       width: 675px;
                       height: 366px;
-                  }
-                }
-                @media all and (max-width: 675px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 500px;
-                      height: 271px;
-                  }
-                }
-                @media all and (max-width: 675px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 500px;
-                      height: 271px;
                   }
                 }
                 @media all and (max-width: 500px) {
@@ -191,10 +180,12 @@ background-image: linear-gradient(137deg, #FFFFFF 0%, #80a7bf 1%, #e9eff2 95%, #
     <body>
         <script type="text/javascript" charset="utf-8">
             function getNewCharts() {
+              $(".resize").css("width", "50%");
+              $(".handle").css("left", "50%");
               var num1 = Math.round(Math.random() * 8 + 2011);
               var num2 = Math.round(Math.random() * 8 + 2011);
               var num3 = Math.round(Math.random() * 8 + 2011);
-              var symbolIdx = Math.round(Math.random() * 58 + 1);
+              var symbolIdx = Math.round(Math.random() * 50 + 1);
               var numbers = [];
               if(num1 == num2) {
                 numbers.push(`${num1}-01-01`, `${num3}-01-01`, symbolIdx)
@@ -202,12 +193,14 @@ background-image: linear-gradient(137deg, #FFFFFF 0%, #80a7bf 1%, #e9eff2 95%, #
                 numbers.push(`${num1}-01-01`, `${num2}-01-01`, symbolIdx)
               
               }
-              console.log(num1, num2, num3);
+              console.log(num1, num2, num3, symbolIdx);
               Shiny.onInputChange("mydata", numbers);
             };
             
             $(document).ready(function(){
               $(".current_date").text(moment().format("dddd, MMMM Do YYYY"));
+              //hides half the chart on initial load
+              $(".resize").css("width", "50%");
               $('.ba-slider').each(function(){
                 var cur = $(this);
                 // Adjust the slider
@@ -222,9 +215,10 @@ background-image: linear-gradient(137deg, #FFFFFF 0%, #80a7bf 1%, #e9eff2 95%, #
 // Because we all do this: i.imgur.com/YkbaV.gif
 $(window).resize(function(){
   $('.ba-slider').each(function(){
+    console.log(this)
     var cur = $(this);
     var width = cur.width()+'px';
-    cur.find('.resize #PriceChart1').css('width', width);
+    cur.find('.resize img').css('width', width);
   });
 });
 
@@ -269,7 +263,7 @@ function drags(dragElement, resizeElement, container) {
 			
       // Set the new values for the slider and the handle. 
       // Bind mouseup events to stop dragging.
-      $('.draggable').css('left', widthValue).on('mouseup touchend touchcancel', function () {
+      $('.draggable').css('left', widthValue).on('mouseup touchend touchcancel', function() {
         $(this).removeClass('draggable');
         resizeElement.removeClass('resizable');
       });
@@ -285,8 +279,11 @@ function drags(dragElement, resizeElement, container) {
   });
 }
         </script>
-        <h1>orinakin</h1>
+        <!--<h1>orinakin</h1> -->
         <div class="current_date"></div>
+        <!--<div class="current_date"> 
+          Friday, November 15th 2019
+        </div>-->
         <div class="ba-slider">
             <div 
                 id="PriceChart2" 
@@ -295,8 +292,8 @@ function drags(dragElement, resizeElement, container) {
             </div>
             <div class="resize">
                 <div 
-                    id="PriceChart1" 
-                    class="shiny-plot-output"
+                    id="PriceChart1"
+                class="shiny-plot-output" 
                 >
                 </div>
             </div>
