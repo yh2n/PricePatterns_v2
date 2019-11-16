@@ -100,7 +100,7 @@ server <- function(input, output, session) {
               # subset = "2008",
               show.grid = T,
               minor.ticks = TRUE,
-              up.col = "#03273D",
+              up.col = "#510F59",
               color.vol = T,
               theme="white",
               log.scale = T,
