@@ -1,6 +1,9 @@
+# _____________________deployment____________
+# library(rsconnect)
+#rsconnect::deployApp('/Users/yohann/Desktop/projects/R/PricePatterns_v2')
+
 library(shiny)
 library(quantmod)
-
 
 nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "ALTR", "ALXN", "AMAT", "AMGN", "AMZN", "ATVI",
@@ -13,6 +16,52 @@ nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "MAR", "MAT", "MDLZ"
 ))
 
+#error: 2012/44, xlu, 2014 2012 2014 33
+companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", " XLU",
+"EMB",
+"XAR",
+"ITB",
+"XLP",
+"ITA",
+"IHI",
+"XHB",
+"XLK",
+"XLY",
+"SMH",
+"QTEC",
+"RWR",
+"IVV",
+"SPY",
+"QQQ",
+"IVE",
+"IGV",
+"XLF",
+"XLI",
+"XNTK",
+"XLB",
+"XT",
+"SKYY",
+"XLV",
+"FDN",
+"EWJ",
+"EFA",
+"IXP",
+"VOX",
+"ROBO",
+"EEM",
+"EWH",
+"IBB",
+"XRT",
+"EMQQ",
+"XTL",
+"IXC",
+"KWEB",
+"XLE",
+"USO",
+"UNG",
+"UNL",
+"XOP",
+"IEZ"))
 server <- function(input, output, session) {
   randomSymbolIndex <- function () {
     index <- round(runif(1, 1, 57))
@@ -20,10 +69,14 @@ server <- function(input, output, session) {
   }
   
   #picks random symbol from Nasdaq 100
-  a <- nasdaq100[randomSymbolIndex()]
+  #a <- nasdaq100[randomSymbolIndex()]
   # a <- symbols[randomSymbolIndex(), 1]
-  getSymbols(a)
+  #getSymbols(a)
   #converts to "xts" symbol
+  #Prices <- get(a)
+  
+  a <- companies[randomSymbolIndex()]
+  getSymbols(a, from="2008-01-13", to="2016-01-13")
   Prices <- get(a)
   
   
@@ -41,31 +94,13 @@ server <- function(input, output, session) {
   
   
   output$PriceChart1 <- renderPlot({
-    # output$results = renderPrint({
-    #   input$mydata
-    # })
-    lineChart(Prices, 
+    lineChart(Prices,
               name= a,
-              type="line", 
-              subset = "2008", 
-              show.grid = T, 
-              up.col = "#F24E29", 
+              type="line",
+              # subset = "2008",
+              show.grid = T,
               minor.ticks = TRUE,
-              color.vol = T,
-              theme="black",
-              log.scale = T,
-              TA= NULL
-    )
-  })
-  
-  output$PriceChart2 <- renderPlot({
-    lineChart(Prices, 
-              name= a,
-              type="line", 
-              subset = "2018", 
-              show.grid = T, 
-              up.col = "#254159", 
-              minor.ticks = TRUE,
+              up.col = "#03273D",
               color.vol = T,
               theme="white",
               log.scale = T,
@@ -73,6 +108,21 @@ server <- function(input, output, session) {
     )
   })
   
+  # output$PriceChart2 <- renderPlot({
+  #  lineChart(Prices,
+  #            name= a,
+  #            type="line",
+  #            # subset = "2018",
+  #            show.grid = T,
+  #            up.col = "#F24E29",
+  #            minor.ticks = TRUE,
+  #            color.vol = T,
+  #            theme="black",
+  #            log.scale = T,
+  #            TA= NULL
+  #  )
+  # })
+
   output$value <- renderPrint({ input$action })
   
   #reactive events
@@ -87,7 +137,7 @@ server <- function(input, output, session) {
     }
     # year1 <- as.character(input$mydata[1])
     # we are getting a character from the FE...
-    b <- nasdaq100[as.numeric(input$mydata[3])]
+    b <- companies[as.numeric(input$mydata[3])]
     getSymbols(b)
     p <- get(b)
     output$PriceChart1 <- renderPlot({
@@ -96,11 +146,11 @@ server <- function(input, output, session) {
                 type="line",
                 subset = year1,
                 show.grid = T,
-                up.col = "#F24E29",
                 dn.col = "pink",
+                up.col = "#254159",
                 minor.ticks = TRUE,
                 color.vol = T,
-                theme="black",
+                theme="white",
                 log.scale = T,
                 TA= NULL
       )
@@ -114,7 +164,7 @@ server <- function(input, output, session) {
     }else {
       year2 <- yearA
     }
-    b <- nasdaq100[as.numeric(input$mydata[3])]
+    b <- companies[as.numeric(input$mydata[3])]
     getSymbols(b)
     p <- get(b)
     output$PriceChart2 <- renderPlot({
@@ -123,11 +173,11 @@ server <- function(input, output, session) {
                 type="line",
                 subset = year2,
                 show.grid = T,
-                up.col = "#254159",
+                up.col = "#F24E29",
                 dn.col = "pink",
                 minor.ticks = TRUE,
                 color.vol = T,
-                theme="white",
+                theme="black",
                 log.scale = T,
                 TA= NULL
       )
