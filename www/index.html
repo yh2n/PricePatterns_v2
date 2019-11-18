@@ -15,7 +15,6 @@
         <style type="text/css" media="all">
             * {
                 box-sizing: border-box;
-                
             }
             body {
                 display: flex;
@@ -24,7 +23,7 @@
                 justify-content: center;
                 align-items: center;
                 background-color: #06203f;
-background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
+                background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
             }
             
             .current_date {
@@ -88,8 +87,7 @@ background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
                   top:0;
                   bottom:0;
                   width:1px;
-                  margin-left:-2px;
-                  background: #123E59;
+                  background: #217554;
                   cursor: ew-resize;
                 }
                 
@@ -182,18 +180,12 @@ background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
             function getNewCharts() {
               $(".resize").css("width", "50%");
               $(".handle").css("left", "50%");
-              var num1 = Math.round(Math.random() * 8 + 2011);
-              var num2 = Math.round(Math.random() * 8 + 2011);
-              var num3 = Math.round(Math.random() * 8 + 2011);
-              var symbolIdx = Math.round(Math.random() * 50 + 1);
+              var num1 = Math.round(Math.random() * 10 + 2008);
+              var num2 = num1 + 1;
+              var symbolIdx = Math.round((Math.random() * 50) + 1);
               var numbers = [];
-              if(num1 == num2) {
-                numbers.push(`${num1}-01-01`, `${num3}-01-01`, symbolIdx)
-              } else {
-                numbers.push(`${num1}-01-01`, `${num2}-01-01`, symbolIdx)
-              
-              }
-              console.log(num1, num2, num3, symbolIdx);
+              numbers.push(`${num1}-01-01`, `${num2}-01-01`, symbolIdx)
+              console.log(num1, num2, symbolIdx);
               Shiny.onInputChange("mydata", numbers);
             };
             
@@ -215,7 +207,6 @@ background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
 // Because we all do this: i.imgur.com/YkbaV.gif
 $(window).resize(function(){
   $('.ba-slider').each(function(){
-    console.log(this)
     var cur = $(this);
     var width = cur.width()+'px';
     cur.find('.resize img').css('width', width);

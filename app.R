@@ -16,8 +16,8 @@ nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "MAR", "MAT", "MDLZ"
 ))
 
-#error: 2012/44, xlu, 2014 2012 2014 33
-companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", " XLU",
+#error: 2012/44, 2014 2012 2014 33, 2008/41, 2008/42, 2011/28, 2010/41, 2009/44
+companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "EMB",
 "XAR",
 "ITB",
@@ -64,7 +64,7 @@ companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", " XLU",
 "IEZ"))
 server <- function(input, output, session) {
   randomSymbolIndex <- function () {
-    index <- round(runif(1, 1, 57))
+    index <- round(runif(1, 1, 50))
     index
   }
   
@@ -75,23 +75,17 @@ server <- function(input, output, session) {
   #converts to "xts" symbol
   #Prices <- get(a)
   
-  a <- companies[randomSymbolIndex()]
-  getSymbols(a, from="2013-04-01", to="2016-04-01")
-  Prices <- get(a)
-  
-  
   x <- round(runif(1, 2007, 2019))
-  y <- round(runif(1, 2007, 2019))
-  if(x < y) {
-    randNum1 <- x
-    randNum2 <- y
-  }else {
-    randNum1 <- y
-    randNum2 <- x
-  }
-  charFromNum1 <- as.character(randNum1)
-  charFromNum2 <- as.character(randNum2)
+  y <- x + 1
   
+  charFromNum1 <- as.character(x)
+  charFromNum2 <- as.character(y)
+  year1 <- format(as.Date(charFromNum1, "%Y"))
+  year2 <- format(as.Date(charFromNum2, "%Y"))
+  a <- companies[randomSymbolIndex()]
+  getSymbols(a, from=year1, to=year2)
+  #converts to "xts" symbol
+  Prices <- get(a)
   
   output$PriceChart1 <- renderPlot({
     lineChart(Prices,
@@ -108,33 +102,16 @@ server <- function(input, output, session) {
     )
   })
   
-  # output$PriceChart2 <- renderPlot({
-  #  lineChart(Prices,
-  #            name= a,
-  #            type="line",
-  #            # subset = "2018",
-  #            show.grid = T,
-  #            up.col = "#F24E29",
-  #            minor.ticks = TRUE,
-  #            color.vol = T,
-  #            theme="black",
-  #            log.scale = T,
-  #            TA= NULL
-  #  )
-  # })
 
   output$value <- renderPrint({ input$action })
   
-  #reactive events
+  #----------reactive events
+  
   # http://www.bradfordtuckfield.com/rproblems.html
   observeEvent(input$mydata, {
     yearA <- format(as.Date(input$mydata[1]), "%Y")
     yearB <- format(as.Date(input$mydata[2]), "%Y")
-    if(yearA < yearB) {
-      year1 <- yearA
-    }else {
-      year1 <- yearB
-    }
+    
     # year1 <- as.character(input$mydata[1])
     # we are getting a character from the FE...
     b <- companies[as.numeric(input$mydata[3])]
@@ -144,40 +121,12 @@ server <- function(input, output, session) {
       lineChart(p,
                 name= b,
                 type="line",
-                subset = year1,
+                subset = yearA,
                 show.grid = T,
-                dn.col = "pink",
-                up.col = "#254159",
+                up.col = "#510F59",
                 minor.ticks = TRUE,
                 color.vol = T,
                 theme="white",
-                log.scale = T,
-                TA= NULL
-      )
-    })
-  })
-  observeEvent(input$mydata, {
-    yearA <- format(as.Date(input$mydata[1]), "%Y")
-    yearB <- format(as.Date(input$mydata[2]), "%Y")
-    if(yearA < yearB) {
-      year2 <- yearB
-    }else {
-      year2 <- yearA
-    }
-    b <- companies[as.numeric(input$mydata[3])]
-    getSymbols(b)
-    p <- get(b)
-    output$PriceChart2 <- renderPlot({
-      lineChart(p,
-                name= b,
-                type="line",
-                subset = year2,
-                show.grid = T,
-                up.col = "#F24E29",
-                dn.col = "pink",
-                minor.ticks = TRUE,
-                color.vol = T,
-                theme="black",
                 log.scale = T,
                 TA= NULL
       )
