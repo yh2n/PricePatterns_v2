@@ -76,7 +76,7 @@ server <- function(input, output, session) {
   #Prices <- get(a)
   
   a <- companies[randomSymbolIndex()]
-  getSymbols(a, from="2008-01-13", to="2016-01-13")
+  getSymbols(a, from="2013-04-01", to="2016-04-01")
   Prices <- get(a)
   
   
