@@ -16,7 +16,8 @@ nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
                 "MAR", "MAT", "MDLZ"
 ))
 
-#error: 2012/44, 2014 2012 2014 33, 2008/41, 2008/42, 2011/28, 2010/41, 2009/44
+#error: 2012/44, 2014 2012 2014/33, 2008/41, 2008/42, 2011/28, 2010/41,
+#2009/44, ROBO, SMH, 2008/5, 2011/5 starts in september, 2014/28
 companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "EMB",
 "XAR",
@@ -47,7 +48,7 @@ companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "EFA",
 "IXP",
 "VOX",
-"ROBO",
+# "ROBO",
 "EEM",
 "EWH",
 "IBB",

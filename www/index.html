@@ -17,17 +17,24 @@
                 box-sizing: border-box;
             }
             body {
-                display: flex;
-                height: 100%;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 background-color: #06203f;
                 background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
+                heigh: 100%;
             }
             
-            .current_date {
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100%;
+              
+            }
+            .date_timer_container {
               font-size: 30px;
+              margin-top: 20%;
               margin-bottom: 100px;
               color: #E9EFF2;
               opacity: .7;
@@ -117,8 +124,25 @@
                       line-height: 24px;
                       font-size: 5px;
                   }
+                  
+                  @media all and(max-height: 600px) {
+                    
+                  body {
+                    height: 100%;
+                  }
+                  }
+                  #PriceChart1, #PriceChart2 {
+                width: 600px;
+                height: 326px;
+                border: solid 2px #217554;
+                border-radius: 3px;
+                background-color:rgba(233, 239, 242, 0.7);
+            }
                 
                 @media all and (max-width: 1300px) {
+                  body {
+                    height: 100vh;
+                  }
                   #PriceChart1, #PriceChart2 {
                       width: 1100px;
                       height: 597px;
@@ -138,8 +162,8 @@
                 }
                 @media all and (max-width: 850px) {
                   #PriceChart1, #PriceChart2 {
-                      width: 800px;
-                      height: 434px;
+                      width: 750px;
+                      height: 407px;
                   }
                 }
                 @media all and (max-width: 750px) {
@@ -149,6 +173,10 @@
                   }
                 }
                 @media all and (max-width: 500px) {
+                  
+                  .date_timer_container {
+                    font-size: 20px;
+                  }
                   #PriceChart1, #PriceChart2 {
                       width: 450px;
                       height: 244px;
@@ -182,7 +210,7 @@
               $(".handle").css("left", "50%");
               var num1 = Math.round(Math.random() * 10 + 2008);
               var num2 = num1 + 1;
-              var symbolIdx = Math.round((Math.random() * 50) + 1);
+              var symbolIdx = Math.round(Math.random() * 50);
               var numbers = [];
               numbers.push(`${num1}-01-01`, `${num2}-01-01`, symbolIdx)
               console.log(num1, num2, symbolIdx);
@@ -190,6 +218,7 @@
             };
             
             $(document).ready(function(){
+              console.log(window.innerHeight)
               $(".current_date").text(moment().format("dddd, MMMM Do YYYY"));
               //hides half the chart on initial load
               $(".resize").css("width", "50%");
@@ -206,6 +235,7 @@
 // Update sliders on resize. 
 // Because we all do this: i.imgur.com/YkbaV.gif
 $(window).resize(function(){
+  console.log(window.innerHeight)
   $('.ba-slider').each(function(){
     var cur = $(this);
     var width = cur.width()+'px';
@@ -270,33 +300,37 @@ function drags(dragElement, resizeElement, container) {
   });
 }
         </script>
-        <!--<h1>orinakin</h1> -->
-        <div class="current_date"></div>
-        <!--<div class="current_date"> 
-          Friday, November 15th 2019
-        </div>-->
-        <div class="ba-slider">
-            <div 
-                id="PriceChart2" 
-                class="shiny-plot-output" 
-            >
+        <div class="container">
+          <div class="date_timer_container">
+            <div class="current_date"></div>
+            <!--<div class="current_date"> 
+              Friday, November 15th 2019
+            </div>-->
+              
             </div>
-            <div class="resize">
-                <div 
-                    id="PriceChart1"
-                class="shiny-plot-output" 
-                >
-                </div>
-            </div>
-            <span class="handle"></span>
-
+          <div class="ba-slider">
+              <div 
+                  id="PriceChart2" 
+                  class="shiny-plot-output" 
+              >
+              </div>
+              <div class="resize">
+                  <div 
+                      id="PriceChart1"
+                  class="shiny-plot-output" 
+                  >
+                  </div>
+              </div>
+              <span class="handle"></span>
+  
+          </div>
+          <button 
+              id="new_charts" 
+              type="submit" 
+              onclick="getNewCharts()"
+          >
+              <i class="fas fa-random"></i>
+          </button>
         </div>
-        <button 
-            id="new_charts" 
-            type="submit" 
-            onclick="getNewCharts()"
-        >
-            <i class="fas fa-random"></i>
-        </button>
     </body>
 </html>
