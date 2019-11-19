@@ -17,7 +17,7 @@ nasdaq100 <- (c("AAPL", "ADBE", "ADI", "ADP", "ADSK", "AKAM",
 ))
 
 #error: 2012/44, 2014 2012 2014/33, 2008/41, 2008/42, 2011/28, 2010/41,
-#2009/44, ROBO, SMH, 2008/5, 2011/5 starts in september, 2014/28
+#2009/44, ROBO, SMH, 2008/5, 2011/5 starts in september, 2014/28, 2013/28
 companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "EMB",
 "XAR",
@@ -65,7 +65,7 @@ companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "IEZ"))
 server <- function(input, output, session) {
   randomSymbolIndex <- function () {
-    index <- round(runif(1, 1, 50))
+    index <- round(runif(1, 1, 49))
     index
   }
   
@@ -77,14 +77,14 @@ server <- function(input, output, session) {
   #Prices <- get(a)
   
   x <- round(runif(1, 2007, 2019))
-  y <- x + 1
+  y <- x + 2
   
   charFromNum1 <- as.character(x)
   charFromNum2 <- as.character(y)
-  year1 <- format(as.Date(charFromNum1, "%Y"))
-  year2 <- format(as.Date(charFromNum2, "%Y"))
+  year1 <- format(as.Date(charFromNum1, format="%Y"))
+  year2 <- format(as.Date(charFromNum2, format="%Y"))
   a <- companies[randomSymbolIndex()]
-  getSymbols(a, from=year1, to=year2)
+  getSymbols(a, from="2017-01-01", to="2018-01-01")
   #converts to "xts" symbol
   Prices <- get(a)
   
@@ -92,7 +92,6 @@ server <- function(input, output, session) {
     lineChart(Prices,
               name= a,
               type="line",
-              # subset = "2008",
               show.grid = T,
               minor.ticks = TRUE,
               up.col = "#510F59",
@@ -110,19 +109,26 @@ server <- function(input, output, session) {
   
   # http://www.bradfordtuckfield.com/rproblems.html
   observeEvent(input$mydata, {
-    yearA <- format(as.Date(input$mydata[1]), "%Y")
-    yearB <- format(as.Date(input$mydata[2]), "%Y")
+    year1 <- input$mydata[1]
+    year2 <- input$mydata[2]
+    # year1 <- as.character(input$mydata[1])
+    # year2 <- as.character(input$mydata[2])
+    
+    yearA <- format(as.Date(year1))
+    yearB <- format(as.Date(year2))
+    # yearA <- format(as.Date(input$mydata[1]), "%Y")
+    # yearB <- format(as.Date(input$mydata[2]), "%Y")
     
     # year1 <- as.character(input$mydata[1])
     # we are getting a character from the FE...
     b <- companies[as.numeric(input$mydata[3])]
-    getSymbols(b)
+    getSymbols(b, from=yearA, to=yearB)
     p <- get(b)
     output$PriceChart1 <- renderPlot({
       lineChart(p,
                 name= b,
                 type="line",
-                subset = yearA,
+                # subset = "2010::2011",
                 show.grid = T,
                 up.col = "#510F59",
                 minor.ticks = TRUE,
