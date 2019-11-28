@@ -5,6 +5,6 @@ account: yh2n
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1459100
-bundleId: 2584273
+bundleId: 2601163
 url: https://yh2n.shinyapps.io/pricepatterns_v2/
-when: 1573592683.74599
+when: 1574184977.04719

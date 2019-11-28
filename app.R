@@ -32,15 +32,12 @@ companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "QTEC",
 "RWR",
 "IVV",
-"SPY",
-"QQQ",
 "IVE",
 "IGV",
 "XLF",
 "XLI",
 "XNTK",
 "XLB",
-"XT",
 "SKYY",
 "XLV",
 "FDN",
@@ -48,12 +45,10 @@ companies <- (c("SPY", "QQQ","XLU", "EMB", "XAR", "XLU",
 "EFA",
 "IXP",
 "VOX",
-# "ROBO",
 "EEM",
 "EWH",
 "IBB",
 "XRT",
-"EMQQ",
 "XTL",
 "IXC",
 "KWEB",
@@ -83,8 +78,9 @@ server <- function(input, output, session) {
   charFromNum2 <- as.character(y)
   year1 <- format(as.Date(charFromNum1, format="%Y"))
   year2 <- format(as.Date(charFromNum2, format="%Y"))
+  # a <- companies[45]
   a <- companies[randomSymbolIndex()]
-  getSymbols(a, from="2017-01-01", to="2018-01-01")
+  getSymbols(a, from="2013-01-01", to="2014-01-01")
   #converts to "xts" symbol
   Prices <- get(a)
   

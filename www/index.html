@@ -11,7 +11,7 @@
             <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
-        <title>orinakin</title>
+        <title>orienakin</title>
         <style type="text/css" media="all">
             * {
                 box-sizing: border-box;
@@ -133,6 +133,9 @@
                   .container {
                     height: 100vh;
                   }
+                  .date_timer_container {
+                      margin-top: 10%;
+                    }
                 }
                 @media all and (max-width: 1400px) {
                   .container {
@@ -243,15 +246,19 @@
   and (max-device-width: 812px) 
   and (-webkit-min-device-pixel-ratio: 3)
   and (orientation: landscape) { 
-    body {
-    width: 100%;
-  }
-   .current_date {
+                    body {
+                      height: 100%;
+                    width: 100vw;
+                  }
+                   .current_date {
                     font-size: 18px;
                   }
                   #PriceChart1, #PriceChart2 {
                       width: 415px;
                       height: 225px;
+                  }
+                  #new_charts {
+                    width: 100px;
                   }
 }
                 
@@ -264,11 +271,11 @@
               $(".handle").css("left", "50%");
               var year1 = Math.round(Math.random() * 10 + 2008);
               var year2 = year1 + 2;
-              var month = Math.round((Math.random() * 12) + 1)
-              var symbolIdx = Math.round((Math.random() * 49) + 1);
+              var month = Math.round((Math.random() * 11) + 1)
+              var symbolIdx = Math.round((Math.random() * 44) + 1);
               var numbers = [];
-              numbers.push(`${year1}/01/01`, `${year2}/01/01`, symbolIdx)
-              //numbers.push(`${year1}/${month}/01`, `${year2}/${month}/01`, symbolIdx)
+              //numbers.push(`${year1}/01/01`, `${year2}/01/01`, symbolIdx)
+              numbers.push(`${year1}/${month}/01`, `${year2}/${month}/01`, symbolIdx)
               console.log(year1, year2, symbolIdx);
               Shiny.onInputChange("mydata", numbers);
             };
