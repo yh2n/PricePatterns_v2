@@ -1,402 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <script src="shared/jquery.js" type="text/javascript"></script>
-        <script src="shared/shiny.js" type="text/javascript"></script>
-        <script src="https://kit.fontawesome.com/40b31feda3.js" crossorigin="anonymous">
-        </script>
-            <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="shared/jquery.js" type="text/javascript"></script>
+    <script src="shared/shiny.js" type="text/javascript"></script>
+    <script
+      src="https://kit.fontawesome.com/40b31feda3.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
-        <title>orienakin</title>
-        <style type="text/css" media="all">
-            * {
-                box-sizing: border-box;
-            }
-            body {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                background-color: #06203f;
-                background-image: linear-gradient(135deg, #06203f 3%, #053b41 100%);
-                height: 100%;
-                width: 100%;
-            }
-            
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 100%;
-              
-            }
-            .date_timer_container {
-              margin-top: 20%;
-            }
-            
-            .current_date {
-              margin-bottom: 100px;
-              color: #E9EFF2;
-              opacity: .7;
-              font-size: 30px;
-            }
-            #PriceChart1, #PriceChart2 {
-                width: 1200px;
-                height: 650px;
-                border: solid 2px #217554;
-                border-radius: 3px;
-                background-color:rgba(233, 239, 242, 0.7);
-            }
-           
-            #PriceChart1 > img, #PriceChart2 > img{
-              width: 100%;
-              height: 100%;
-            }
-            
-            #new_charts {
-                color: white;;
-                opacity: .8;
-                background-color: transparent;
-                width: 150px;
-                height: 40px;
-                font-size: 20px;
-                border: .5px solid #217554;
-                border-radius: 3px;
-                margin-top: 90px;
-                outline: none;
-            }
-            
-             #new_charts:hover {
-               cursor: pointer;
-             }
-             
-            .ba-slider {
-                position: relative;
-                overflow: hidden;
-            }
-             
-                .ba-slider div {
-                    width: 100%;
-                    display:block;
-                }
-                 
-                .resize {
-                    position: absolute;
-                    top:0;
-                    left: 0;
-                    height: 100%;
-                    width: 50%;
-                    overflow: hidden;
-                }
-                
-                .handle { /* Thin line seperator */
-                  position:absolute; 
-                  left:50%;
-                  top:0;
-                  bottom:0;
-                  width:1px;
-                  background: #217554;
-                  cursor: ew-resize;
-                }
-                
-                .handle:after {
-                    position: absolute;
-                    top: 2%;
-                    width: 14px;
-                    height: 14px;
-                    margin: -7px 0 0 -7px;
-                    content: '\21d4';
-                    color: white;
-                    font-weight: bold;
-                    font-size: 13px;
-                    text-align: center;
-                    line-height: 14px;
-                    background: #217554;
-                    border: 1px solid #217554;
-                    border-radius: 50%;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, .3), inset 0 2px 0 rgba(255, 255, 255, .5), inset 0 60px 50px -30px #217554;
-                }
-                
-                  .draggable:after {
-                      width: 24px;
-                      height: 24px;
-                      margin: -12px 0 0 -12px;
-                      line-height: 24px;
-                      font-size: 5px;
-                  }
-                  
-                @media all and (min-width: 1401px) {
-                  .container {
-                    height: 100vh;
-                  }
-                  .date_timer_container {
-                      margin-top: 10%;
-                    }
-                }
-                @media all and (max-width: 1400px) {
-                  .container {
-                    height: 100%;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 900px;
-                      height: 489px;
-                  }
-                  #new_charts {
-                    margin-top: 60px;
-                  }
-                }
-                
-                @media all and (max-width: 1000px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 750px;
-                      height: 407px;
-                  }
-                }
-                @media all and (max-width: 800px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 650px;
-                      height: 353px;
-                  }
-                  .current_date {
-                    font-size: 25px;
-                  }
-                }
-                @media all and (max-width: 700px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 550px;
-                      height: 298px;
-                  }
-                }
-                @media all and (max-width: 600px) {
-                  .container {
-                    height: 100vh;
-                  }
-                  .current_date{
-                    font-size: 20px;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 450px;
-                      height: 244px;
-                  }
-                }
-                @media all and (max-width: 450px) {
-                  .current_date {
-                    font-size: 15px;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 375px;
-                      height: 203px;
-                  }
-                }
-               /* @media all and (max-width: 375px) {
-                  .current_date {
-                    font-size: 12px;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 350px;
-                      height: 190px;
-                  }
-                }
-                @media all and (max-width: 350px) {
-                  #PriceChart1, #PriceChart2 {
-                      width: 315px;
-                      height: 171px;
-                  }
-                }*/
-                
-                @media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3) { 
-     .current_date {
-                    font-size: 12px;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 400px;
-                      height: 217px;
-                  }
-
-}
-
-/* Portrait */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) { 
-    .date_timer_container {
-              margin-top: 40%;
-            }
-   .current_date {
-                    font-size: 12px;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 350px;
-                      height: 190px;
-                  }
-}
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: landscape) { 
-                    body {
-                      height: 100%;
-                    width: 100vw;
-                  }
-                   .current_date {
-                    font-size: 18px;
-                  }
-                  #PriceChart1, #PriceChart2 {
-                      width: 415px;
-                      height: 225px;
-                  }
-                  #new_charts {
-                    width: 100px;
-                  }
-}
-                
-        </style>
-    </head>
-    <body>
-        <script type="text/javascript" charset="utf-8">
-            function getNewCharts() {
-              $(".resize").css("width", "50%");
-              $(".handle").css("left", "50%");
-              var year1 = Math.round(Math.random() * 10 + 2008);
-              var year2 = year1 + 2;
-              var month = Math.round((Math.random() * 11) + 1)
-              var symbolIdx = Math.round((Math.random() * 44) + 1);
-              var numbers = [];
-              //numbers.push(`${year1}/01/01`, `${year2}/01/01`, symbolIdx)
-              numbers.push(`${year1}/${month}/01`, `${year2}/${month}/01`, symbolIdx)
-              console.log(year1, year2, symbolIdx);
-              Shiny.onInputChange("mydata", numbers);
-            };
-            
-            $(document).ready(function(){
-              console.log(window.innerHeight)
-              //if(window.innerHeight < 700) {
-                
-              //}
-              $(".current_date").text(moment().format("dddd, MMMM Do YYYY"));
-              //hides half the chart on initial load
-              $(".resize").css("width", "50%");
-              $('.ba-slider').each(function(){
-                var cur = $(this);
-                // Adjust the slider
-                var width = cur.width()+'px';
-                cur.find('.resize img').css('width', width);
-                // Bind dragging events
-                drags(cur.find('.handle'), cur.find('.resize'), cur);
-              });
-            });
-
-// Update sliders on resize. 
-// Because we all do this: i.imgur.com/YkbaV.gif
-$(window).resize(function(){
-  console.log(window.innerHeight)
-  $('.ba-slider').each(function(){
-    var cur = $(this);
-    var width = cur.width()+'px';
-    cur.find('.resize img').css('width', width);
-  });
-});
-
-function drags(dragElement, resizeElement, container) {
-	
-  // Initialize the dragging event on mousedown.
-  dragElement.on('mousedown touchstart', function(e) {
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>orienakin</title>
     
-    dragElement.addClass('draggable');
-    resizeElement.addClass('resizable');
-    
-    // Check if it's a mouse or touch event and pass along the correct value
-    var startX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
-    
-    // Get the initial position
-    var dragWidth = dragElement.outerWidth(),
-        posX = dragElement.offset().left + dragWidth - startX,
-        containerOffset = container.offset().left,
-        containerWidth = container.outerWidth();
- 
-    // Set limits
-    minLeft = containerOffset + 10;
-    maxLeft = containerOffset + containerWidth - dragWidth - 10;
-    
-    // Calculate the dragging distance on mousemove.
-    dragElement.parents().on("mousemove touchmove", function(e) {
-    	
-      // Check if it's a mouse or touch event and pass along the correct value
-      var moveX = (e.pageX) ? e.pageX : e.originalEvent.touches[0].pageX;
-      
-      leftValue = moveX + posX - dragWidth;
-      
-      // Prevent going off limits
-      if ( leftValue < minLeft) {
-        leftValue = minLeft;
-      } else if (leftValue > maxLeft) {
-        leftValue = maxLeft;
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      function getNewCharts() {
+        $(".resize").css("width", "50%")
+        $(".handle").css("left", "50%")
+        var year1 = Math.round(Math.random() * 10 + 2008)
+        var year2 = year1 + 2
+        var month = Math.round(Math.random() * 11 + 1)
+        var symbolIdx = Math.round(Math.random() * 44 + 1)
+        var numbers = []
+        //numbers.push(`${year1}/01/01`, `${year2}/01/01`, symbolIdx)
+        numbers.push(`${year1}/${month}/01`, `${year2}/${month}/01`, symbolIdx)
+        console.log(year1, year2, symbolIdx)
+        Shiny.onInputChange("mydata", numbers)
       }
-      
-      // Translate the handle's left value to masked divs width.
-      widthValue = (leftValue + dragWidth/2 - containerOffset)*100/containerWidth+'%';
-			
-      // Set the new values for the slider and the handle. 
-      // Bind mouseup events to stop dragging.
-      $('.draggable').css('left', widthValue).on('mouseup touchend touchcancel', function() {
-        $(this).removeClass('draggable');
-        resizeElement.removeClass('resizable');
-      });
-      $('.resizable').css('width', widthValue);
-    }).on('mouseup touchend touchcancel', function(){
-      dragElement.removeClass('draggable');
-      resizeElement.removeClass('resizable');
-    });
-    e.preventDefault();
-  }).on('mouseup touchend touchcancel', function(e){
-    dragElement.removeClass('draggable');
-    resizeElement.removeClass('resizable');
-  });
-}
-        </script>
-        <div class="container">
-          <div class="date_timer_container">
-            <div class="current_date"></div>
-            <!--<div class="current_date"> 
+
+      $(document).ready(function () {
+        console.log(window.innerHeight)
+        //if(window.innerHeight < 700) {
+
+        //}
+        $(".current_date").text(moment().format("dddd, MMMM Do YYYY"))
+        //hides half the chart on initial load
+        $(".resize").css("width", "50%")
+        $(".ba-slider").each(function () {
+          var cur = $(this)
+          // Adjust the slider
+          var width = cur.width() + "px"
+          cur.find(".resize img").css("width", width)
+          // Bind dragging events
+          drags(cur.find(".handle"), cur.find(".resize"), cur)
+        })
+      })
+
+      // Update sliders on resize.
+      // Because we all do this: i.imgur.com/YkbaV.gif
+      $(window).resize(function () {
+        console.log(window.innerHeight)
+        $(".ba-slider").each(function () {
+          var cur = $(this)
+          var width = cur.width() + "px"
+          cur.find(".resize img").css("width", width)
+        })
+      })
+
+      function drags(dragElement, resizeElement, container) {
+        // Initialize the dragging event on mousedown.
+        dragElement
+          .on("mousedown touchstart", function (e) {
+            dragElement.addClass("draggable")
+            resizeElement.addClass("resizable")
+
+            // Check if it's a mouse or touch event and pass along the correct value
+            var startX = e.pageX ? e.pageX : e.originalEvent.touches[0].pageX
+
+            // Get the initial position
+            var dragWidth = dragElement.outerWidth(),
+              posX = dragElement.offset().left + dragWidth - startX,
+              containerOffset = container.offset().left,
+              containerWidth = container.outerWidth()
+
+            // Set limits
+            minLeft = containerOffset + 10
+            maxLeft = containerOffset + containerWidth - dragWidth - 10
+
+            // Calculate the dragging distance on mousemove.
+            dragElement
+              .parents()
+              .on("mousemove touchmove", function (e) {
+                // Check if it's a mouse or touch event and pass along the correct value
+                var moveX = e.pageX ? e.pageX : e.originalEvent.touches[0].pageX
+
+                leftValue = moveX + posX - dragWidth
+
+                // Prevent going off limits
+                if (leftValue < minLeft) {
+                  leftValue = minLeft
+                } else if (leftValue > maxLeft) {
+                  leftValue = maxLeft
+                }
+
+                // Translate the handle's left value to masked divs width.
+                widthValue =
+                  ((leftValue + dragWidth / 2 - containerOffset) * 100) /
+                    containerWidth +
+                  "%"
+
+                // Set the new values for the slider and the handle.
+                // Bind mouseup events to stop dragging.
+                $(".draggable")
+                  .css("left", widthValue)
+                  .on("mouseup touchend touchcancel", function () {
+                    $(this).removeClass("draggable")
+                    resizeElement.removeClass("resizable")
+                  })
+                $(".resizable").css("width", widthValue)
+              })
+              .on("mouseup touchend touchcancel", function () {
+                dragElement.removeClass("draggable")
+                resizeElement.removeClass("resizable")
+              })
+            e.preventDefault()
+          })
+          .on("mouseup touchend touchcancel", function (e) {
+            dragElement.removeClass("draggable")
+            resizeElement.removeClass("resizable")
+          })
+      }
+    </script>
+    <div class="container">
+      <div class="date_timer_container">
+        <div class="current_date"></div>
+        <!--<div class="current_date"> 
               Friday, November 15th 2019
             </div>-->
-              
-            </div>
-          <div class="ba-slider">
-              <div 
-                  id="PriceChart2" 
-                  class="shiny-plot-output" 
-              >
-              </div>
-              <div class="resize">
-                  <div 
-                      id="PriceChart1"
-                  class="shiny-plot-output" 
-                  >
-                  </div>
-              </div>
-              <span class="handle"></span>
-  
-          </div>
-          <button 
-              id="new_charts" 
-              type="submit" 
-              onclick="getNewCharts()"
-          >
-              <i class="fas fa-random"></i>
-          </button>
+      </div>
+      <div class="ba-slider">
+        <div id="PriceChart2" class="shiny-plot-output"></div>
+        <div class="resize">
+          <div id="PriceChart1" class="shiny-plot-output"></div>
         </div>
-    </body>
+        <span class="handle"></span>
+      </div>
+      <button id="new_charts" type="submit" onclick="getNewCharts()">
+        <i class="fas fa-random"></i>
+      </button>
+    </div>
+  </body>
 </html>
