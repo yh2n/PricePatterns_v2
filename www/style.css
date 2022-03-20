@@ -56,7 +56,7 @@
       }
 
       #new_charts:hover {
-        cursor: ew-resize;
+        cursor: pointer;
       }
 
       .ba-slider {
