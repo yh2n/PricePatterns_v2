@@ -2,6 +2,8 @@
 
 Financial modelling app using the  R [quantmod library](https://www.quantmod.com/)
 
+This tool was created to practice pattern recognition. Upon selection of a ticker and a year, a chart will be drawn but the second half of the year will be hidden. The use of the slider allows to display the rest of the chart progressively.
+
 
 
 
