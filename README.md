@@ -1,6 +1,6 @@
 # PricePatterns
 
-Financial modelling app using the R [quantmod library](https://www.quantmod.com/) for data and [Shiny](https://shiny.posit.co/) to create the front end.
+Financial modeling app using the R [quantmod library](https://www.quantmod.com/) for data and [Shiny](https://shiny.posit.co/) to create the front end.
 
 This tool was created to practice pattern recognition. Upon selection of a ticker and a year, a chart will be drawn but the second half of the year will be hidden. The slider allows to display the rest of the chart progressively.
 
